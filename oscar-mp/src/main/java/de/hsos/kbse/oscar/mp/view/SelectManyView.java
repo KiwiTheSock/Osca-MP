@@ -5,9 +5,11 @@
  */
 package de.hsos.kbse.oscar.mp.view;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,8 +18,8 @@ import javax.inject.Named;
  * @author wihowert
  */
 @Named
-@RequestScoped
-public class SelectManyView {
+@SessionScoped
+public class SelectManyView implements Serializable{
 
     private String selectedOptions;
     private boolean showCalendar = false;
