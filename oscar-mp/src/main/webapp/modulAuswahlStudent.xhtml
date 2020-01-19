@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!-- Modulanmeldung -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f = "http://java.sun.com/jsf/core">
+
+    <script type="text/javascript">
+        PrimeFaces.locales['de'] = {
+            closeText: 'Schließen',
+            prevText: 'Zurück',
+            nextText: 'Weiter',
+            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            monthNamesShort: ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+            weekHeader: 'Woche',
+            FirstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Nur Zeit',
+            timeText: 'Zeit',
+            hourText: 'Stunde',
+            minuteText: 'Minute',
+            secondText: 'Sekunde',
+            currentText: 'Aktuelles Datum',
+            ampm: false,
+            month: 'Monat',
+            week: 'Woche',
+            day: 'Tag',
+            allDayText: 'Ganzer Tag'
+        };
+        PrimeFaces.locales ['de'] = {
+            closeText: 'Schließen',
+            prevText: 'Zurück',
+            nextText: 'Weiter',
+            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+            weekHeader: 'Woche',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Nur Zeit',
+            timeText: 'Zeit',
+            hourText: 'Stunde',
+            minuteText: 'Minute',
+            secondText: 'Sekunde',
+            currentText: 'Aktuelles Datum',
+            ampm: false,
+            month: 'Monat',
+            week: 'Woche',
+            day: 'Tag',
+            allDayText: 'Ganzer Tag'
+        };
+    </script>
+
+    <style type="text/css">
+        .value {
+            font-weight: bold;
+        }
+    </style>
+
+    <h:head>
+        <title> Osca-MP-Anmeldung </title>        
+    </h:head>  
+
+    <h:body style="background-image: url('data/blurred.jpg'); background-repeat: no-repeat; background-size: cover">
+        <!-- LOGO -->
+        <div style="text-align: center">
+            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..."></img>
+        </div>
+        <!-- LOGIN DIV/BORDER -->
+        <div style="background-color:#FFFFFF; margin:30px; text-align: center; border-left: 6px solid #BCCBD0; border-top: 6px solid #BCCBD0" >
+            <h:form style="text-align: left;padding: 45px;" id="form">
+
+                <p:row>
+                    <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Auswahl des Moduls zur mündlichen Prüfung</h3>
+                </p:row>
+                <!-- AUSWAHL -->
+                <p:row>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <h:outputText value="Module:" style="font-family: Andale Mono, monospace"/>
+                        <p:selectOneButton value="#{selectManyView.selectedOptions}" style="font-size: 14px">
+                            <f:selectItem itemLabel="Mathe 1" itemValue="Mathe1"/>
+                            <f:selectItem itemLabel="KBSE" itemValue="KBSE"/>
+                            <f:selectItem itemLabel="OOAD" itemValue="OOAD"/>
+                        </p:selectOneButton>
+
+                        <h:commandButton value="Bestätigen" style="font-family: Andale Mono, monospace; margin-top: 50px; margin-bottom: 50px; font-size: 14px"/>
+                        <p:spacer />
+
+                        <h:outputText value="Ausgewählt:" style="font-family: Andale Mono, monospace"/>
+                        <p:dataList id="display" value="#{selectManyView.selectedOptions}" var="font" emptyMessage="Keine Module ausgewählt" style="font-family: Andale Mono, monospace; font-size: 14px">
+                            <h:outputText value="#{font}" style="font-weight: bold; font-size: 14px" />
+                        </p:dataList>
+
+                        <h:panelGroup id="showCalendar">
+                            <h:panelGrid rendered="#{selectManyView.showCalendar}" style="margin-top: 40px">
+                                <p:outputLabel for="effect" value="Wahl des Termins:" style="font-family: Andale Mono, monospace; font-size: 14px" />
+                                <p:calendar id="effect" value="#{calendarView.date8}" effect="fold" />
+                                <p:commandButton value="Termin bestätigen" action="#{calendarView.click}" style="font-family: Andale Mono, monospace; margin-top: 50px; margin-bottom: 50px; font-size: 14px"/>
+
+                                <p:dialog modal="true" resizable="false" header="Termin" widgetVar="dlg" showEffect="fold" style="font-family: Andale Mono, monospace; font-size: 14px">
+                                    <p:panelGrid columns="2" columnClasses="label,value">
+                                        <h:outputText value="Tag:" />
+                                        <h:outputText value="#{calendarView.date8}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:panelGrid>
+                                </p:dialog>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:row>
+            </h:form>
+        </div>                
+    </h:body>
+</html>

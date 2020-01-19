@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!-- First-/ Lastname -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title> Osca-MP-Anmeldung </title>        
+    </h:head>  
+
+    <h:body style="background-image: url('data/blurred.jpg'); background-repeat: no-repeat; background-size: cover">
+        <!-- LOGO -->
+        <div style="text-align: center">
+            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..."></img>
+        </div>
+        <!-- LOGIN DIV/BORDER -->
+        <div style="background-color:#FFFFFF; margin:30px; text-align: center; border-left: 6px solid #BCCBD0; border-top: 6px solid #BCCBD0" >
+            <h:form style="text-align: left;padding: 45px;" id="formID">
+                <p:row>
+                    <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Anmeldung zur mündlichen Prüfung</h3>
+                </p:row>
+
+                <h:panelGrid>
+
+                    <p:row style="padding:20px; padding-bottom: 0px;">
+                        <!-- Username -->  
+                        <h:outputLabel for="userName" value="Benutzername:" style="font-family: Andale Mono, monospace"/>
+                        <p:inputText id="userName"
+                                     style="margin-left: 20px; font-family: Andale Mono, monospace"
+                                     type="text"
+                                     placeholder="Benutzername"                                         
+                                     
+                                     />
+                    </p:row>
+                    <p:row style="padding: 20px; padding-top: 0px;">
+                        <!-- PW -->  
+                        <h:outputLabel for="password" value="Passwort:" style="font-family: Andale Mono, monospace; margin-top: 10px"/>
+                        <p:inputText 
+                            type="password"
+                            style="margin-left: 20px; font-family: Andale Mono, monospace; margin-top: 10px"
+                            id="password" 
+                            placeholder="Passwort"
+                            
+                            />
+                    </p:row>
+
+
+                </h:panelGrid>
+
+                <p:row id="nextButtonRow">        
+                    <h:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 14px" 
+                                     value="Login"
+                                     action="modulAuswahlStudent"/>
+                </p:row>
+            </h:form>
+        </div>                
+    </h:body>
+</html>
