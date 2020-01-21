@@ -7,7 +7,6 @@ package de.hsos.kbse.oscar.mp.entity;
 
 import java.util.Objects;
 import javax.enterprise.context.Dependent;
-import javax.json.bind.annotation.JsonbProperty;
 
 /**
  *
@@ -17,9 +16,7 @@ import javax.json.bind.annotation.JsonbProperty;
 public class User {
     
     private String id;
-    @JsonbProperty("studentName")
     private String studentName;
-    @JsonbProperty("studentPassword")
     private String studentPassword;
     private boolean isDozent;
 
