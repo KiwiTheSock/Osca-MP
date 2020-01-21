@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -27,11 +28,12 @@ import org.primefaces.event.SelectEvent;
  * @author wihowert
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class CalendarView implements Serializable {
 
     private boolean dateSet = false;
     private Date date8;
+    private Date date14;
     private Date dateDe;
     private Date dateTimeDe;
     private List<Date> multi;
@@ -86,9 +88,10 @@ public class CalendarView implements Serializable {
 
     @Logable(logLevel = LevelEnum.INFO)
     public void click() {
-        PrimeFaces.current().ajax().update("form:display");
+        PrimeFaces.current().ajax().update("form:displayTermin");
         PrimeFaces.current().executeScript("PF('dlg').show()");
         System.out.println("CLICKDATE: " + this.date8);
+        System.out.println("CLICKTIME: " + this.date14);
     }
 
     public Date getDate8() {
@@ -96,9 +99,7 @@ public class CalendarView implements Serializable {
     }
     @Logable(logLevel = LevelEnum.INFO)
     public void setDate8(Date date8) {
-        System.out.println("Einstieg:");
         this.date8 = date8;
-        System.out.println("Date: " + this.date8);
         if (this.date8 != null) {
             this.setDateSet(true);
         } else {
@@ -214,5 +215,21 @@ public class CalendarView implements Serializable {
      */
     public void setDateSet(boolean dateSet) {
         this.dateSet = dateSet;
+    }
+
+    /**
+     * @return the date14
+     */
+    public Date getDate14() {
+        return date14;
+    }
+
+    /**
+     * @param date14 the date14 to set
+     */
+    public void setDate14(Date date14) {
+        this.date14 = date14;
+        this.date8.setHours(this.date14.getHours());
+        this.date8.setMinutes(this.date14.getMinutes());
     }
 }
