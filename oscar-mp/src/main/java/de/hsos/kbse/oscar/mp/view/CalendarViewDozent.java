@@ -5,10 +5,7 @@
  */
 package de.hsos.kbse.oscar.mp.view;
 
-import logger.interceptorbinding.LevelEnum;
-import logger.interceptorbinding.Logable;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,8 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -29,15 +24,9 @@ import org.primefaces.event.SelectEvent;
  */
 @Named
 @SessionScoped
-public class CalendarView implements Serializable {
+public class CalendarViewDozent implements Serializable {
 
-    private boolean dateSet = false;
-    private Date date8;
-    private Date date14;
-    private Date dateDe;
-    private Date dateTimeDe;
-    private List<Date> multi;
-    private List<Date> range;
+    private Date date2;
     private List<Date> invalidDates;
     private List<Integer> invalidDays;
     private Date minDate;
@@ -46,190 +35,210 @@ public class CalendarView implements Serializable {
     private Date maxTime;
     private Date minDateTime;
     private Date maxDateTime;
+    private Date dateDe;
+    private Date dateTimeDe;
 
     @PostConstruct
     public void init() {
-        invalidDates = new ArrayList<>();
+        setInvalidDates(new ArrayList<>());
         Date today = new Date();
-        invalidDates.add(today);
+        getInvalidDates().add(today);
         long oneDay = 24 * 60 * 60 * 1000;
         for (int i = 0; i < 5; i++) {
-            invalidDates.add(new Date(invalidDates.get(i).getTime() + oneDay));
+            getInvalidDates().add(new Date(getInvalidDates().get(i).getTime() + oneDay));
         }
 
-        invalidDays = new ArrayList<>();
-        invalidDays.add(0);
+        setInvalidDays(new ArrayList<>());
+        getInvalidDays().add(0);
         /* the first day of week is disabled */
-        invalidDays.add(3);
+        getInvalidDays().add(3);
 
-        minDate = new Date(today.getTime() - (365 * oneDay));
-        maxDate = new Date(today.getTime() + (365 * oneDay));
+        setMinDate(new Date(today.getTime() - (365 * oneDay)));
+        setMaxDate(new Date(today.getTime() + (365 * oneDay)));
 
         Calendar tmp = Calendar.getInstance();
         tmp.set(Calendar.HOUR_OF_DAY, 9);
         tmp.set(Calendar.MINUTE, 0);
         tmp.set(Calendar.SECOND, 0);
         tmp.set(Calendar.MILLISECOND, 0);
-        minTime = tmp.getTime();
+        setMinTime(tmp.getTime());
 
         tmp = Calendar.getInstance();
         tmp.set(Calendar.HOUR_OF_DAY, 17);
         tmp.set(Calendar.MINUTE, 0);
         tmp.set(Calendar.SECOND, 0);
         tmp.set(Calendar.MILLISECOND, 0);
-        maxTime = tmp.getTime();
+        setMaxTime(tmp.getTime());
 
-        minDateTime = new Date(today.getTime() - (7 * oneDay));
-        maxDateTime = new Date(today.getTime() + (7 * oneDay));
+        setMinDateTime(new Date(today.getTime() - (7 * oneDay)));
+        setMaxDateTime(new Date(today.getTime() + (7 * oneDay)));
 
-        dateDe = GregorianCalendar.getInstance().getTime();
-        dateTimeDe = GregorianCalendar.getInstance().getTime();
+        setDateDe(GregorianCalendar.getInstance().getTime());
+        setDateTimeDe(GregorianCalendar.getInstance().getTime());
     }
 
-    @Logable(logLevel = LevelEnum.INFO)
-    public void click() {
-        PrimeFaces.current().ajax().update("form:displayTermin");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
-        System.out.println("CLICKDATE: " + this.date8);
-        System.out.println("CLICKTIME: " + this.date14);
-    }
-
-    public Date getDate8() {
-        return date8;
-    }
-    @Logable(logLevel = LevelEnum.INFO)
-    public void setDate8(Date date8) {
-        this.date8 = date8;
-        if (this.date8 != null) {
-            this.setDateSet(true);
+    public void displayLogDate() {
+        FacesMessage msg;
+        if (getDate2() != null) {
+            msg = new FacesMessage("Bestätigt: ", "Tag " + getDate2() + " hinzugefügt");
         } else {
-            this.setDateSet(false);
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Tag konnte nicht gesetzt werden.");
         }
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public List<Date> getMulti() {
-        return multi;
+    /**
+     * @return the date2
+     */
+    public Date getDate2() {
+        return date2;
     }
 
-    public void setMulti(List<Date> multi) {
-        this.multi = multi;
+    /**
+     * @param date2 the date2 to set
+     */
+    public void setDate2(Date date2) {
+        this.date2 = date2;
     }
 
-    public List<Date> getRange() {
-        return range;
-    }
-
-    public void setRange(List<Date> range) {
-        this.range = range;
-    }
-
+    /**
+     * @return the invalidDates
+     */
     public List<Date> getInvalidDates() {
         return invalidDates;
     }
 
+    /**
+     * @param invalidDates the invalidDates to set
+     */
     public void setInvalidDates(List<Date> invalidDates) {
         this.invalidDates = invalidDates;
     }
 
+    /**
+     * @return the invalidDays
+     */
     public List<Integer> getInvalidDays() {
         return invalidDays;
     }
 
+    /**
+     * @param invalidDays the invalidDays to set
+     */
     public void setInvalidDays(List<Integer> invalidDays) {
         this.invalidDays = invalidDays;
     }
 
+    /**
+     * @return the minDate
+     */
     public Date getMinDate() {
         return minDate;
     }
 
+    /**
+     * @param minDate the minDate to set
+     */
     public void setMinDate(Date minDate) {
         this.minDate = minDate;
     }
 
+    /**
+     * @return the maxDate
+     */
     public Date getMaxDate() {
         return maxDate;
     }
 
+    /**
+     * @param maxDate the maxDate to set
+     */
     public void setMaxDate(Date maxDate) {
         this.maxDate = maxDate;
     }
 
-    public Date getDateTimeDe() {
-        return dateTimeDe;
-    }
-
-    public void setDateTimeDe(Date dateTimeDe) {
-        this.dateTimeDe = dateTimeDe;
-    }
-
-    public Date getDateDe() {
-        return dateDe;
-    }
-
-    public void setDateDe(Date dateDe) {
-        this.dateDe = dateDe;
-    }
-
+    /**
+     * @return the minTime
+     */
     public Date getMinTime() {
         return minTime;
     }
 
+    /**
+     * @param minTime the minTime to set
+     */
     public void setMinTime(Date minTime) {
         this.minTime = minTime;
     }
 
+    /**
+     * @return the maxTime
+     */
     public Date getMaxTime() {
         return maxTime;
     }
 
+    /**
+     * @param maxTime the maxTime to set
+     */
     public void setMaxTime(Date maxTime) {
         this.maxTime = maxTime;
     }
 
+    /**
+     * @return the minDateTime
+     */
     public Date getMinDateTime() {
         return minDateTime;
     }
 
+    /**
+     * @param minDateTime the minDateTime to set
+     */
     public void setMinDateTime(Date minDateTime) {
         this.minDateTime = minDateTime;
     }
 
+    /**
+     * @return the maxDateTime
+     */
     public Date getMaxDateTime() {
         return maxDateTime;
     }
 
+    /**
+     * @param maxDateTime the maxDateTime to set
+     */
     public void setMaxDateTime(Date maxDateTime) {
         this.maxDateTime = maxDateTime;
     }
 
     /**
-     * @return the dateSet
+     * @return the dateDe
      */
-    public boolean isDateSet() {
-        return dateSet;
+    public Date getDateDe() {
+        return dateDe;
     }
 
     /**
-     * @param dateSet the dateSet to set
+     * @param dateDe the dateDe to set
      */
-    public void setDateSet(boolean dateSet) {
-        this.dateSet = dateSet;
+    public void setDateDe(Date dateDe) {
+        this.dateDe = dateDe;
     }
 
     /**
-     * @return the date14
+     * @return the dateTimeDe
      */
-    public Date getDate14() {
-        return date14;
+    public Date getDateTimeDe() {
+        return dateTimeDe;
     }
 
     /**
-     * @param date14 the date14 to set
+     * @param dateTimeDe the dateTimeDe to set
      */
-    public void setDate14(Date date14) {
-        this.date14 = date14;
-        this.date8.setHours(this.date14.getHours());
-        this.date8.setMinutes(this.date14.getMinutes());
+    public void setDateTimeDe(Date dateTimeDe) {
+        this.dateTimeDe = dateTimeDe;
     }
 }

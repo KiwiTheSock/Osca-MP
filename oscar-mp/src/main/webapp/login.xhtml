@@ -20,39 +20,24 @@
                     <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Anmeldung zur mündlichen Prüfung</h3>
                 </p:row>
 
-                <h:panelGrid>
+                <p:row>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-                    <p:row style="padding:20px; padding-bottom: 0px;">
-                        <!-- Username -->  
-                        <h:outputLabel for="userName" value="Benutzername:" style="font-family: Andale Mono, monospace"/>
-                        <p:inputText id="userName"
-                                     style="margin-left: 20px; font-family: Andale Mono, monospace"
-                                     type="text"
-                                     placeholder="Benutzername"                                         
-                                     
-                                     />
-                    </p:row>
-                    <p:row style="padding: 20px; padding-top: 0px;">
-                        <!-- PW -->  
-                        <h:outputLabel for="password" value="Passwort:" style="font-family: Andale Mono, monospace; margin-top: 10px"/>
-                        <p:inputText 
-                            type="password"
-                            style="margin-left: 20px; font-family: Andale Mono, monospace; margin-top: 10px"
-                            id="password" 
-                            placeholder="Passwort"
-                            
-                            />
-                    </p:row>
+                        <p:outputLabel for="username" value="Benutzername: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:inputText id="username" placeholder="Name" style="font-family: Andale Mono, monospace; font-size: 14px"/>
 
+                        <p:outputLabel for="passwordUser" value="Passwort: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:inputText id="passwordUser" placeholder="Passwort" style="font-family: Andale Mono, monospace; font-size: 14px"/>
 
-                </h:panelGrid>
+                    </h:panelGrid>
+                </p:row>
 
                 <p:row id="nextButtonStudent">        
                     <h:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 14px" 
                                      value="LoginStudent"
                                      action="modulAuswahlStudent"/>
                 </p:row>
-                                <p:row id="nextButtonDozent">        
+                <p:row id="nextButtonDozent">        
                     <h:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 14px" 
                                      value="LoginDozent"
                                      action="modulAnlegenDozent"/>

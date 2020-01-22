@@ -44,22 +44,22 @@ public class DropdownViewStudent implements Serializable {
         getTimes().put("14:00", "14:00");
         getTimes().put("15:00", "15:00");
         //(K,V)
-        days.put("15.10.2019", "15.10.2019");
-        days.put("16.10.2019", "16.10.2019");
-        days.put("17.10.2019", "17.10.2019");
-        getModulDay().put("Mathe 1", days);
+        getDays().put("15.10.2019", "15.10.2019");
+        getDays().put("16.10.2019", "16.10.2019");
+        getDays().put("17.10.2019", "17.10.2019");
+        getModulDay().put("Mathe 1", getDays());
 
-        days.put("18.10.2019", "18.10.2019");
-        days.put("19.10.2019", "19.10.2019");
-        days.put("20.10.2019", "20.10.2019");
-        getModulDay().put("KBSE", days);
+        getDays().put("18.10.2019", "18.10.2019");
+        getDays().put("19.10.2019", "19.10.2019");
+        getDays().put("20.10.2019", "20.10.2019");
+        getModulDay().put("KBSE", getDays());
 
-        days.put("15.10.2019", "15.10.2019");
-        days.put("16.10.2019", "16.10.2019");
-        days.put("17.10.2019", "17.10.2019");
-        getModulDay().put("OOAD", days);
+        getDays().put("15.10.2019", "15.10.2019");
+        getDays().put("16.10.2019", "16.10.2019");
+        getDays().put("17.10.2019", "17.10.2019");
+        getModulDay().put("OOAD", getDays());
         
-        getDayTime().put("15.10.2019", times);
+        getDayTime().put("15.10.2019", getTimes());
     }
 
     public Map<String, Map<String, String>> getModulDay() {
@@ -90,7 +90,7 @@ public class DropdownViewStudent implements Serializable {
         return days;
     }
 
-    public void onCountryChange() {
+    public void onChange() {
         if (getModul() != null && !modul.equals("")) {
             setDays(getModulDay().get(getModul()));
         } else {
@@ -98,12 +98,12 @@ public class DropdownViewStudent implements Serializable {
         }
     }
 
-    public void displayLocation() {
+    public void displayLog() {
         FacesMessage msg;
         if (getDay() != null && getModul() != null && getTime() != null) {
             msg = new FacesMessage("Bestätigt: ", getModul() + " am " + getDay() + " um " + getTime() + " Uhr.");
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Modul ist nicht ausgewählt.");
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewählt.");
         }
 
         FacesContext.getCurrentInstance().addMessage(null, msg);

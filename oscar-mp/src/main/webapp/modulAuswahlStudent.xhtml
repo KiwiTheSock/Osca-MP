@@ -7,67 +7,6 @@
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:f = "http://java.sun.com/jsf/core">
 
-    <script type="text/javascript">
-        PrimeFaces.locales['de'] = {
-            closeText: 'Schließen',
-            prevText: 'Zurück',
-            nextText: 'Weiter',
-            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthNamesShort: ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
-            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
-            weekHeader: 'Woche',
-            FirstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: '',
-            timeOnlyTitle: 'Nur Zeit',
-            timeText: 'Zeit',
-            hourText: 'Stunde',
-            minuteText: 'Minute',
-            secondText: 'Sekunde',
-            currentText: 'Aktuelles Datum',
-            ampm: false,
-            month: 'Monat',
-            week: 'Woche',
-            day: 'Tag',
-            allDayText: 'Ganzer Tag'
-        };
-        PrimeFaces.locales ['de'] = {
-            closeText: 'Schließen',
-            prevText: 'Zurück',
-            nextText: 'Weiter',
-            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
-            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
-            weekHeader: 'Woche',
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: '',
-            timeOnlyTitle: 'Nur Zeit',
-            timeText: 'Zeit',
-            hourText: 'Stunde',
-            minuteText: 'Minute',
-            secondText: 'Sekunde',
-            currentText: 'Aktuelles Datum',
-            ampm: false,
-            month: 'Monat',
-            week: 'Woche',
-            day: 'Tag',
-            allDayText: 'Ganzer Tag'
-        };
-    </script>
-
-    <style type="text/css">
-        .value {
-            font-weight: bold;
-        }
-    </style>
-
     <h:head>
         <title> Osca-MP-Anmeldung </title>        
     </h:head>  
@@ -75,7 +14,7 @@
     <h:body style="background-image: url('data/blurred.jpg'); background-repeat: no-repeat; background-size: cover">
         <!-- LOGO -->
         <div style="text-align: center">
-            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..."></img>
+            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..." onclick="location.href = 'login.xhtml'"></img>
         </div>
         <!-- LOGIN DIV/BORDER -->
         <div style="background-color:#FFFFFF; margin:30px; text-align: center; border-left: 6px solid #BCCBD0; border-top: 6px solid #BCCBD0" >
@@ -87,26 +26,30 @@
                 <!-- AUSWAHL -->
                 <p:row>
                     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                        <p:outputLabel for="moduls" value="Module: " style="font-family: Andale Mono, monospace"/>
-                        <p:selectOneMenu id="moduls" value="#{dropdownViewStudent.modul}" style="width:150px; font-family: Andale Mono, monospace">
-                            <p:ajax listener="#{dropdownViewStudent.onCountryChange}" update="day" />
+                        <p:outputLabel for="moduls" value="Module: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:selectOneMenu id="moduls" value="#{dropdownViewStudent.modul}" style="width:150px; font-family: Andale Mono, monospace; font-size: 14px">
+                            <p:ajax update="moduls"/>
                             <f:selectItem itemLabel="Modul auswählen" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{dropdownViewStudent.moduls}" />
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="day" value="Tag: " style="font-family: Andale Mono, monospace"/>
-                        <p:selectOneMenu id="day" value="#{dropdownViewStudent.day}" style="width:150px; font-family: Andale Mono, monospace">
+                        <p:outputLabel for="day" value="Tag: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:selectOneMenu id="day" value="#{dropdownViewStudent.day}" style="width:150px; font-family: Andale Mono, monospace; font-size: 14px">
                             <f:selectItem itemLabel="Zeit auswählen" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{dropdownViewStudent.days}" />
+                            <p:ajax update="day"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="time" value="Zeit: " style="font-family: Andale Mono, monospace"/>
-                        <p:selectOneMenu id="time" value="#{dropdownViewStudent.time}" style="width:150px; font-family: Andale Mono, monospace">
+                        <p:outputLabel for="time" value="Zeit: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:selectOneMenu id="time" value="#{dropdownViewStudent.time}" style="width:150px; font-family: Andale Mono, monospace; font-size: 14px">
                             <f:selectItem itemLabel="Zeit auswählen" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{dropdownViewStudent.times}" />
+                            <p:ajax update="time"/>
                         </p:selectOneMenu>
 
-                        <p:commandButton value="Bestätigen" update="msgs" action="#{dropdownViewStudent.displayLocation}" style="font-family: Andale Mono, monospace; font-size: 14px; margin-top: 30px" />
+                        <h:commandButton value="Bestätigen" action="#{dropdownViewStudent.displayLog}" style="font-family: Andale Mono, monospace; font-size: 14px; margin-top: 30px">
+                            <p:ajax update="msgs"/>
+                        </h:commandButton>
                         <p:spacer />
 
                     </h:panelGrid>

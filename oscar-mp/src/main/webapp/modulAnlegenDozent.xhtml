@@ -7,67 +7,6 @@
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:f = "http://java.sun.com/jsf/core">
 
-    <script type="text/javascript">
-        PrimeFaces.locales['de'] = {
-            closeText: 'Schließen',
-            prevText: 'Zurück',
-            nextText: 'Weiter',
-            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthNamesShort: ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
-            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
-            weekHeader: 'Woche',
-            FirstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: '',
-            timeOnlyTitle: 'Nur Zeit',
-            timeText: 'Zeit',
-            hourText: 'Stunde',
-            minuteText: 'Minute',
-            secondText: 'Sekunde',
-            currentText: 'Aktuelles Datum',
-            ampm: false,
-            month: 'Monat',
-            week: 'Woche',
-            day: 'Tag',
-            allDayText: 'Ganzer Tag'
-        };
-        PrimeFaces.locales ['de'] = {
-            closeText: 'Schließen',
-            prevText: 'Zurück',
-            nextText: 'Weiter',
-            monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-            monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-            dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-            dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
-            dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
-            weekHeader: 'Woche',
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: '',
-            timeOnlyTitle: 'Nur Zeit',
-            timeText: 'Zeit',
-            hourText: 'Stunde',
-            minuteText: 'Minute',
-            secondText: 'Sekunde',
-            currentText: 'Aktuelles Datum',
-            ampm: false,
-            month: 'Monat',
-            week: 'Woche',
-            day: 'Tag',
-            allDayText: 'Ganzer Tag'
-        };
-    </script>
-
-    <style type="text/css">
-        .value {
-            font-weight: bold;
-        }
-    </style>
-
     <h:head>
         <title> Osca-MP-Anmeldung </title>        
     </h:head>  
@@ -75,22 +14,73 @@
     <h:body style="background-image: url('data/blurred.jpg'); background-repeat: no-repeat; background-size: cover">
         <!-- LOGO -->
         <div style="text-align: center">
-            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..."></img>
+            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..." onclick="location.href = 'login.xhtml'"></img>
         </div>
         <!-- LOGIN DIV/BORDER -->
         <div style="background-color:#FFFFFF; margin:30px; text-align: center; border-left: 6px solid #BCCBD0; border-top: 6px solid #BCCBD0" >
             <h:form style="text-align: left;padding: 45px;" id="form">
+                <p:growl id="msgs" showDetail="true" />
 
                 <p:row>
                     <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Anlegen des Moduls zur mündlichen Prüfung</h3>
                 </p:row>
                 <!-- ANLEGEN -->
 
-                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                    <h:outputText value="Semester:" style="font-family: Andale Mono, monospace"/>
+                <p:row>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
+                        <p:outputLabel for="terms" value="Semester: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        <p:selectOneMenu disabled="#{dropdownViewDozent.buttonCheck}" id="terms" value="#{dropdownViewDozent.term}" style="font-family: Andale Mono, monospace; font-size: 14px;">
+                            <f:selectItem itemLabel="Semester auswählen" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{dropdownViewDozent.convertListTerms}"/>
+                            <p:ajax update="display"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
 
-                </h:panelGrid>
+                    <p:separator style="margin-top: 30px; border-color: #BCCBD0"/>
+                    <p:spacer/>
+
+                    <p:outputPanel style="margin-top: 10px" id="display">
+                        <p:outputLabel rendered="#{dropdownViewDozent.termExists}" value="Name und Pürfung für Modul festlegen" style="font-family: Andale Mono, monospace"/>
+                        <h:panelGrid rendered="#{dropdownViewDozent.termExists}" columns="2" style="margin-top:50px" cellpadding="5">
+
+                            <p:outputLabel for="modulName" value="Modulname: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                            <p:inputText disabled="#{dropdownViewDozent.buttonCheck}" value="#{dropdownViewDozent.modulName}" id="modulName" placeholder="Name" style="font-family: Andale Mono, monospace; font-size: 14px"/>
+
+                            <p:outputLabel for="duration" value="Prüfungsdauer (Min): " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                            <p:selectOneMenu disabled="#{dropdownViewDozent.buttonCheck}" id="duration" value="#{dropdownViewDozent.duration}" style="font-family: Andale Mono, monospace; font-size: 14px;">
+                                <f:selectItems value="#{dropdownViewDozent.convertListDurations}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="studentCount" value="Anzahl der Studierenden (x): " style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                            <p:selectOneMenu disabled="#{dropdownViewDozent.buttonCheck}" id="studentCount" value="#{dropdownViewDozent.studentCount}" style="font-family: Andale Mono, monospace; font-size: 14px;">
+                                <f:selectItems value="#{dropdownViewDozent.convertListStudentCounts}"/>
+                            </p:selectOneMenu>
+
+                            <h:commandButton value="Bestätigen" disabled="#{dropdownViewDozent.buttonCheck}" action="#{dropdownViewDozent.displayLog}" style="font-family: Andale Mono, monospace; font-size: 14px; margin-top: 30px">
+                                <p:ajax update="msgs"/>
+                                <p:ajax update="display"/>
+                                <p:ajax update="terms"/>
+                                <p:ajax update="setDays"/>
+                                <f:actionListener binding="#{dropdownViewDozent.setButtonCheck(true)}"/>
+                            </h:commandButton>
+                            <p:spacer />
+                        </h:panelGrid>
+
+                        <p:separator id="seperatorChecked" rendered="#{dropdownViewDozent.buttonCheck}" style="margin-top: 30px; margin-bottom: 30px; border-color: #BCCBD0"/>
+                        <p:spacer rendered="#{dropdownViewDozent.buttonCheck}" id="spacerChecked"/>
+
+                        <p:outputLabel id="setDays" rendered="#{dropdownViewDozent.buttonCheck}" value="Tage und Zeiten festlegen" style="font-family: Andale Mono, monospace;"/>
+                        <h:panelGrid rendered="#{dropdownViewDozent.buttonCheck}" columns="2" style="margin-top:50px" cellpadding="5">
+                            <p:outputLabel for="popup" value="Termine hinzufügen:" style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                            <p:datePicker id="popup" value="#{calendarViewDozent.date2}" style="font-family: Andale Mono, monospace; font-size: 14px"/>
+                        </h:panelGrid>
+                        <h:commandButton rendered="#{dropdownViewDozent.buttonCheck}" value="Hinzufügen" action="#{calendarViewDozent.displayLogDate()}" style="font-family: Andale Mono, monospace; font-size: 14px" >
+                            <p:ajax update="msgs"/>
+                        </h:commandButton>
+                    </p:outputPanel>
+
+                </p:row>
             </h:form>
         </div>                
     </h:body>
