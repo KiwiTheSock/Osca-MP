@@ -1,4 +1,4 @@
-# Oscar-MP
+# Osca-MP
 Maven-Projekt für eine Anmeldung zur Mündlichen Klausur
 
 Kurzbeschreibung
