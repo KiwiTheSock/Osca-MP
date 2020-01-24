@@ -30,16 +30,23 @@ public class DropdownViewDozent implements Serializable {
     private Map<String, String> terms = new HashMap<>();
     private Map<String, Integer> durations = new HashMap<>();
     private Map<String, Integer> studentCounts = new HashMap<>();
+    private Map<String, String> examMins = new HashMap<>();
+    private Map<String, String> examMaxs = new HashMap<>();
     private List<String> convertListTerms = new ArrayList<>();
     private List<String> convertListDurations = new ArrayList<>();
     private List<String> convertListStudentCounts = new ArrayList<>();
+    private List<String> convertListExamMins = new ArrayList<>();
+    private List<String> convertListExamMaxs = new ArrayList<>();
     private String term;
     private String text;
     private String modulName;
+    private String examMin = "10:00";
+    private String examMax = "15:00";
     private int duration = 30;
     private int studentCount = 1;
     private boolean termExists = false;
     private boolean buttonCheck = false;
+    private boolean buttonCheck2 = false;
 
     @PostConstruct
     public void init() {
@@ -59,8 +66,23 @@ public class DropdownViewDozent implements Serializable {
         getStudentCounts().put("4", 4);
         getStudentCounts().put("5", 5);
 
+        getExamMins().put("10:00", "10:00");
+        getExamMins().put("11:00", "11:00");
+        getExamMins().put("12:00", "12:00");
+
+        getExamMaxs().put("16:00", "16:00");
+        getExamMaxs().put("17:00", "17:00");
+        getExamMaxs().put("18:00", "18:00");
+
         for (Map.Entry<String, String> map : getTerms().entrySet()) {
             getConvertListTerms().add(map.getValue());
+        }
+
+        for (Map.Entry<String, String> map : getExamMins().entrySet()) {
+            getConvertListExamMins().add(map.getValue());
+        }
+        for (Map.Entry<String, String> map : getExamMaxs().entrySet()) {
+            getConvertListExamMaxs().add(map.getValue());
         }
 
         getConvertListTerms().sort(Comparator.naturalOrder());
@@ -77,11 +99,22 @@ public class DropdownViewDozent implements Serializable {
     public void displayLog() {
         FacesMessage msg;
         if (getTerm() != null) {
-            msg = new FacesMessage("Bestätigt: ", "Für das " + getTerm() + " das Modul \"" + getModulName()
-                    + "\" mit der Prüfungsdauer " + getDuration() + " für "
-                    + getStudentCount() + " Prüfling(e) angelegt");
+            msg = new FacesMessage("Bestaetigt: ", "Fuer das " + getTerm() + " das Modul \"" + getModulName()
+                    + "\" mit der Pruefungsdauer " + getDuration() + " für "
+                    + getStudentCount() + " Pruefling(e) angelegt");
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewählt.");
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewaehlt.");
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void displayLogExam() {
+        FacesMessage msg;
+        if (getExamMin() != null && getExamMax() != null) {
+            msg = new FacesMessage("Pruefungszeitraum bestaetigt: ", " Von " + getExamMin() + " bis " + getExamMax() + " Uhr.");
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewaehlt.");
         }
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -90,6 +123,7 @@ public class DropdownViewDozent implements Serializable {
     /**
      * @return the terms
      */
+
     public Map<String, String> getTerms() {
         return terms;
     }
@@ -279,6 +313,104 @@ public class DropdownViewDozent implements Serializable {
     public void setModulName(String modulName) {
         System.out.println("Modulname gesetzt: " + modulName);
         this.modulName = modulName;
+    }
+
+    /**
+     * @return the examMins
+     */
+    public Map<String, String> getExamMins() {
+        return examMins;
+    }
+
+    /**
+     * @param examMins the examMins to set
+     */
+    public void setExamMins(Map<String, String> examMins) {
+        this.examMins = examMins;
+    }
+
+    /**
+     * @return the examMaxs
+     */
+    public Map<String, String> getExamMaxs() {
+        return examMaxs;
+    }
+
+    /**
+     * @param examMaxs the examMaxs to set
+     */
+    public void setExamMaxs(Map<String, String> examMaxs) {
+        this.examMaxs = examMaxs;
+    }
+
+    /**
+     * @return the convertListExamMins
+     */
+    public List<String> getConvertListExamMins() {
+        return convertListExamMins;
+    }
+
+    /**
+     * @param convertListExamMins the convertListExamMins to set
+     */
+    public void setConvertListExamMins(List<String> convertListExamMins) {
+        this.convertListExamMins = convertListExamMins;
+    }
+
+    /**
+     * @return the convertListExamMaxs
+     */
+    public List<String> getConvertListExamMaxs() {
+        return convertListExamMaxs;
+    }
+
+    /**
+     * @param convertListExamMaxs the convertListExamMaxs to set
+     */
+    public void setConvertListExamMaxs(List<String> convertListExamMaxs) {
+        this.convertListExamMaxs = convertListExamMaxs;
+    }
+
+    /**
+     * @return the examMin
+     */
+    public String getExamMin() {
+        return examMin;
+    }
+
+    /**
+     * @param examMin the examMin to set
+     */
+    public void setExamMin(String examMin) {
+        this.examMin = examMin;
+    }
+
+    /**
+     * @return the examMax
+     */
+    public String getExamMax() {
+        return examMax;
+    }
+
+    /**
+     * @param examMax the examMax to set
+     */
+    public void setExamMax(String examMax) {
+        this.examMax = examMax;
+    }
+
+    /**
+     * @return the buttonCheck2
+     */
+    public boolean isButtonCheck2() {
+        return buttonCheck2;
+    }
+
+    /**
+     * @param buttonCheck2 the buttonCheck2 to set
+     */
+    public void setButtonCheck2(boolean buttonCheck2) {
+        this.buttonCheck2 = buttonCheck2;
     }
 
 }

@@ -10,13 +10,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import logger.interceptorbinding.LevelEnum;
+import logger.interceptorbinding.Logable;
 
 /**
  *
@@ -37,6 +41,10 @@ public class CalendarViewDozent implements Serializable {
     private Date maxDateTime;
     private Date dateDe;
     private Date dateTimeDe;
+    private Map<Integer, Date> days = new HashMap<>();
+    private List<Date> convertListDays = new ArrayList<>();
+    private Date day;
+    private static int key = 0;
 
     @PostConstruct
     public void init() {
@@ -87,6 +95,7 @@ public class CalendarViewDozent implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+    
 
     /**
      * @return the date2
@@ -98,8 +107,18 @@ public class CalendarViewDozent implements Serializable {
     /**
      * @param date2 the date2 to set
      */
+    @Logable(logLevel = LevelEnum.INFO)
     public void setDate2(Date date2) {
         this.date2 = date2;
+        System.out.println("Date ....." + this.date2);
+
+        getDays().put(this.key, date2);
+        this.key += this.key + 1;
+
+        for (Map.Entry<Integer, Date> map : getDays().entrySet()) {
+            getConvertListDays().add(map.getValue());
+            System.out.println("List: " + map.getValue().toString());
+        }
     }
 
     /**
@@ -240,5 +259,47 @@ public class CalendarViewDozent implements Serializable {
      */
     public void setDateTimeDe(Date dateTimeDe) {
         this.dateTimeDe = dateTimeDe;
+    }
+
+    /**
+     * @return the days
+     */
+    public Map<Integer, Date> getDays() {
+        return days;
+    }
+
+    /**
+     * @param days the days to set
+     */
+    public void setDays(Map<Integer, Date> days) {
+        this.days = days;
+    }
+
+    /**
+     * @return the convertListDays
+     */
+    public List<Date> getConvertListDays() {
+        return convertListDays;
+    }
+
+    /**
+     * @param convertListDays the convertListDays to set
+     */
+    public void setConvertListDays(List<Date> convertListDays) {
+        this.convertListDays = convertListDays;
+    }
+
+    /**
+     * @return the day
+     */
+    public Date getDay() {
+        return day;
+    }
+
+    /**
+     * @param day the day to set
+     */
+    public void setDay(Date day) {
+        this.day = day;
     }
 }

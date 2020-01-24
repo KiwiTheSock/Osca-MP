@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<!-- First-/ Lastname -->
+<!-- Login -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
+    <h:head>   
         <title> Osca-MP-Anmeldung </title>        
     </h:head>  
 
     <h:body style="background-image: url('data/blurred.jpg'); background-repeat: no-repeat; background-size: cover">
+        <style type="text/css">
+            .green-button.ui-button.ui-state-default {
+                background-color: #5cb85c;
+                border-color: #5cb85c;
+                color: #fff;
+            }
+
+            .green-button.ui-button.ui-state-default:enabled:hover, 
+            .green-button.ui-button.ui-state-default:focus {
+                background-color: #4cae4c;
+                border-color: #5cb85c;
+            }
+
+            .red-button.ui-button.ui-state-default {
+                background-color: #d9534f;
+                border-color: #d9534f;
+                color: #fff;
+            }
+
+            .red-button.ui-button.ui-state-default:enabled:hover, 
+            .red-button.ui-button.ui-state-default:focus {
+                background-color: #d43f3a;
+                border-color: #d9534f;
+            }
+
+        </style>
         <!-- LOGO -->
         <div style="text-align: center">
-            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..."></img>
+            <img height="30%" width="30%" src="data/Logo.png" alt="Hier sollte eigentlich ein Bild sein ..." onclick="location.href = 'load.xhtml'"></img>
         </div>
         <!-- LOGIN DIV/BORDER -->
         <div style="background-color:#FFFFFF; margin:30px; text-align: center; border-left: 6px solid #BCCBD0; border-top: 6px solid #BCCBD0" >
             <h:form style="text-align: left;padding: 45px;" id="formID">
                 <p:row>
-                    <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Anmeldung zur mündlichen Prüfung</h3>
+                    <h3 style="font-family: Andale Mono, monospace; margin-bottom: 50px">Anmeldung zur muendlichen Pruefung</h3>
                 </p:row>
 
                 <p:row>
@@ -29,18 +55,17 @@
                         <p:outputLabel for="passwordUser" value="Passwort: " style="font-family: Andale Mono, monospace; font-size: 14px"/>
                         <p:inputText id="passwordUser" placeholder="Passwort" style="font-family: Andale Mono, monospace; font-size: 14px"/>
 
-                    </h:panelGrid>
-                </p:row>
+                        <p:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 12px" 
+                                         styleClass="green-button"
+                                         value="LoginStudent"
+                                         action="modulAuswahlStudent"/>
 
-                <p:row id="nextButtonStudent">        
-                    <h:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 14px" 
-                                     value="LoginStudent"
-                                     action="modulAuswahlStudent"/>
-                </p:row>
-                <p:row id="nextButtonDozent">        
-                    <h:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 14px" 
-                                     value="LoginDozent"
-                                     action="modulAnlegenDozent"/>
+                        <p:commandButton style="font-family: Andale Mono, monospace; margin-top: 30px; font-size: 12px" 
+                                         styleClass="red-button"
+                                         value="LoginDozent"
+                                         action="modulAnlegenDozent"/>
+
+                    </h:panelGrid>
                 </p:row>
             </h:form>
         </div>                

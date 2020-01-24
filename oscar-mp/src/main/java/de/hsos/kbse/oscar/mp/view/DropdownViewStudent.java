@@ -28,18 +28,21 @@ public class DropdownViewStudent implements Serializable {
     private String day;
     private String time;
     private Map<String, String> moduls = new HashMap<>();
-    private Map<String, String> days = new HashMap<>();;
-    private Map<String, String> times = new HashMap<>();;
+    private Map<String, String> days = new HashMap<>();
+    ;
+    private Map<String, String> times = new HashMap<>();
+
+    ;
 
     @PostConstruct
     public void init() {
         setModuls(new HashMap<>());
         setTimes(new HashMap<>());
-        
+
         getModuls().put("Mathe1", "Mathe 1");
         getModuls().put("KBSE", "KBSE");
         getModuls().put("OOAD", "OOAD");
-        
+
         getTimes().put("13:00", "13:00");
         getTimes().put("14:00", "14:00");
         getTimes().put("15:00", "15:00");
@@ -58,7 +61,7 @@ public class DropdownViewStudent implements Serializable {
         getDays().put("16.10.2019", "16.10.2019");
         getDays().put("17.10.2019", "17.10.2019");
         getModulDay().put("OOAD", getDays());
-        
+
         getDayTime().put("15.10.2019", getTimes());
     }
 
@@ -101,9 +104,9 @@ public class DropdownViewStudent implements Serializable {
     public void displayLog() {
         FacesMessage msg;
         if (getDay() != null && getModul() != null && getTime() != null) {
-            msg = new FacesMessage("Bestätigt: ", getModul() + " am " + getDay() + " um " + getTime() + " Uhr.");
+            msg = new FacesMessage("Bestaetigt: ", getModul() + " am " + getDay() + " um " + getTime() + " Uhr bestaetigt.");
         } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewählt.");
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Parameter nicht ausgewaehlt.");
         }
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
