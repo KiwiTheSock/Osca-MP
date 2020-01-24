@@ -5,119 +5,100 @@
  */
 package de.hsos.kbse.oscar.mp.entity;
 
-import de.hsos.kbse.osca.abstracts.AbstractEntity;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Philipp
  */
-@Entity
-public class Exam extends AbstractEntity {
+@Entity //Create persisten Unite
+public class Exam {
     
-    @NotNull(message = "duration can't be empty")
-    private float duration;
-    @NotNull(message = "Starttime can't be empty")
-    private Time start;
-    @NotNull(message = "Endtime can't be empty")
-    private Time end;
-    @NotNull(message = "Amount can't be empty")
-    private int spaceforStudents;
-    @NotNull(message = "Day can't be empty")
-    private Date day;
+    @GeneratedValue
+    @Id
+    private long _id;
+    private float _duration;
+    private Time _start;
+    private Time _end;
+    private int _spaceforStudents;
+    private Date _day;
     
-    @ManyToOne
-    private List<Module> modules;
-    
-    @OneToMany
-    private List<TimeSlot> timeslots;
+    @ManyToMany
+    private List<User> users;
 
-    public Exam() {
+    public Exam(long _id, float _duration, Time _start, Time _end, int _space, Date _day) {
+        this._id = _id;
+        this._duration = _duration;
+        this._start = _start;
+        this._end = _end;
+        this._spaceforStudents = _space;
+        this._day = _day;
     }
 
-    public Exam(float duration, Time start, Time end, int spaceforStudents, Date day, List<Module> modules, List<TimeSlot> timeslots) {
-        this.duration = duration;
-        this.start = start;
-        this.end = end;
-        this.spaceforStudents = spaceforStudents;
-        this.day = day;
-        this.modules = modules;
-        this.timeslots = timeslots;
+    public long getId() {
+        return this._id;
+    }
+
+    public void setId(long _id) {
+        this._id = _id;
     }
 
     public float getDuration() {
-        return duration;
+        return _duration;
     }
 
-    public void setDuration(float duration) {
-        this.duration = duration;
+    public void setDuration(float _duration) {
+        this._duration = _duration;
     }
 
     public Time getStart() {
-        return start;
+        return _start;
     }
 
-    public void setStart(Time start) {
-        this.start = start;
+    public void setStart(Time _start) {
+        this._start = _start;
     }
 
     public Time getEnd() {
-        return end;
+        return _end;
     }
 
-    public void setEnd(Time end) {
-        this.end = end;
+    public void setEnd(Time _end) {
+        this._end = _end;
     }
 
-    public int getSpaceforStudents() {
-        return spaceforStudents;
+    public int getSpace() {
+        return _spaceforStudents;
     }
 
-    public void setSpaceforStudents(int spaceforStudents) {
-        this.spaceforStudents = spaceforStudents;
+    public void setSpace(int _space) {
+        this._spaceforStudents = _space;
     }
 
     public Date getDay() {
-        return day;
+        return _day;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
-    }
-
-    public List<Module> getModules() {
-        return modules;
-    }
-
-    public void setModules(List<Module> modules) {
-        this.modules = modules;
-    }
-
-    public List<TimeSlot> getTimeslots() {
-        return timeslots;
-    }
-
-    public void setTimeslots(List<TimeSlot> timeslots) {
-        this.timeslots = timeslots;
+    public void setDay(Date _day) {
+        this._day = _day;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Float.floatToIntBits(this.duration);
-        hash = 43 * hash + Objects.hashCode(this.start);
-        hash = 43 * hash + Objects.hashCode(this.end);
-        hash = 43 * hash + this.spaceforStudents;
-        hash = 43 * hash + Objects.hashCode(this.day);
-        hash = 43 * hash + Objects.hashCode(this.modules);
-        hash = 43 * hash + Objects.hashCode(this.timeslots);
+        hash = 67 * hash + (int) (this._id ^ (this._id >>> 32));
+        hash = 67 * hash + Float.floatToIntBits(this._duration);
+        hash = 67 * hash + Objects.hashCode(this._start);
+        hash = 67 * hash + Objects.hashCode(this._end);
+        hash = 67 * hash + this._spaceforStudents;
+        hash = 67 * hash + Objects.hashCode(this._day);
         return hash;
     }
 
@@ -133,25 +114,22 @@ public class Exam extends AbstractEntity {
             return false;
         }
         final Exam other = (Exam) obj;
-        if (Float.floatToIntBits(this.duration) != Float.floatToIntBits(other.duration)) {
+        if (this._id != other._id) {
             return false;
         }
-        if (this.spaceforStudents != other.spaceforStudents) {
+        if (Float.floatToIntBits(this._duration) != Float.floatToIntBits(other._duration)) {
             return false;
         }
-        if (!Objects.equals(this.start, other.start)) {
+        if (this._spaceforStudents != other._spaceforStudents) {
             return false;
         }
-        if (!Objects.equals(this.end, other.end)) {
+        if (!Objects.equals(this._start, other._start)) {
             return false;
         }
-        if (!Objects.equals(this.day, other.day)) {
+        if (!Objects.equals(this._end, other._end)) {
             return false;
         }
-        if (!Objects.equals(this.modules, other.modules)) {
-            return false;
-        }
-        if (!Objects.equals(this.timeslots, other.timeslots)) {
+        if (!Objects.equals(this._day, other._day)) {
             return false;
         }
         return true;
@@ -159,6 +137,7 @@ public class Exam extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Exam{" + "duration=" + duration + ", start=" + start + ", end=" + end + ", spaceforStudents=" + spaceforStudents + ", day=" + day + ", modules=" + modules + ", timeslots=" + timeslots + '}';
+        return "Exam{" + "_id=" + _id + ", _duration=" + _duration + ", _start=" + _start + ", _end=" + _end + ", _space=" + _spaceforStudents + ", _day=" + _day + '}';
     }
+
 }

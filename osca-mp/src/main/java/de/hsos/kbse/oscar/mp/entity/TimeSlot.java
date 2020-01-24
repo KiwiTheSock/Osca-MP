@@ -5,55 +5,70 @@
  */
 package de.hsos.kbse.oscar.mp.entity;
 
-import de.hsos.kbse.osca.abstracts.AbstractEntity;
 import java.sql.Time;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Philipp
  */
-@Entity
-public class TimeSlot extends AbstractEntity {
-
-    private float slot;
-
-    @ManyToOne
-    private List<Exam> exam;
+public class TimeSlot {
+    
+    private String _timeID;
+    private float _duration;
+    private Time _startTime;
+    private Time _endTime;
 
     public TimeSlot() {
+        //
+    }
+    
+    public TimeSlot(String timeID, float duration, Time startTime, Time endTime) {
+        this._timeID = timeID;
+        this._duration = duration;
+        this._startTime = startTime;
+        this._endTime = endTime;
     }
 
-    public TimeSlot(float slot, List<Exam> exam) {
-        this.slot = slot;
-        this.exam = exam;
+    public String getTimeID() {
+        return _timeID;
     }
 
-    public float getSlot() {
-        return slot;
+    public void setTimeID(String timeID) {
+        this._timeID = timeID;
     }
 
-    public void setSlot(float slot) {
-        this.slot = slot;
+    public float getDuration() {
+        return _duration;
     }
 
-    public List<Exam> getExam() {
-        return exam;
+    public void setDuration(float duration) {
+        this._duration = duration;
     }
 
-    public void setExam(List<Exam> exam) {
-        this.exam = exam;
+    public Time getStartTime() {
+        return _startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this._startTime = startTime;
+    }
+
+    public Time getEndTime() {
+        return _endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this._endTime = endTime;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 43 * hash + Float.floatToIntBits(this.slot);
-        hash = 43 * hash + Objects.hashCode(this.exam);
+        hash = 97 * hash + Objects.hashCode(this._timeID);
+        hash = 97 * hash + Float.floatToIntBits(this._duration);
+        hash = 97 * hash + Objects.hashCode(this._startTime);
+        hash = 97 * hash + Objects.hashCode(this._endTime);
         return hash;
     }
 
@@ -69,10 +84,16 @@ public class TimeSlot extends AbstractEntity {
             return false;
         }
         final TimeSlot other = (TimeSlot) obj;
-        if (Float.floatToIntBits(this.slot) != Float.floatToIntBits(other.slot)) {
+        if (Float.floatToIntBits(this._duration) != Float.floatToIntBits(other._duration)) {
             return false;
         }
-        if (!Objects.equals(this.exam, other.exam)) {
+        if (!Objects.equals(this._timeID, other._timeID)) {
+            return false;
+        }
+        if (!Objects.equals(this._startTime, other._startTime)) {
+            return false;
+        }
+        if (!Objects.equals(this._endTime, other._endTime)) {
             return false;
         }
         return true;
@@ -80,6 +101,7 @@ public class TimeSlot extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "TimeSlot{" + "slot=" + slot + ", exam=" + exam + '}';
+        return "TimeSlot{" + "_timeID=" + _timeID + ", _duration=" + _duration + ", _startTime=" + _startTime + ", _endTime=" + _endTime + '}';
     }
+    
 }

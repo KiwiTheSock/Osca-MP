@@ -5,74 +5,62 @@
  */
 package de.hsos.kbse.oscar.mp.entity;
 
-import de.hsos.kbse.osca.abstracts.AbstractEntity;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Philipp
  */
 @Entity
-public class Module extends AbstractEntity {
+public class Module {
     
-    //ID wird in AbstractEntity erstellt
-    @NotNull(message = "Modulename can't be empty")
-    private String moduleName;
-    @NotNull(message = "Semester can't be empty")
-    private int semester;
-    
-    @ManyToMany
-    private List<User> users;
+    @GeneratedValue
+    @Id
+    private int _id;
+    private String _name;
+    private int _semester;
 
-    @OneToMany
-    private List<Exam> exam;
-    
     public Module() {
+        
+    }
+    
+    public Module(int id, String name, int semester) {
+        
     }
 
-    public Module(String moduleName, int semester, List<User> users) {
-        this.moduleName = moduleName;
-        this.semester = semester;
-        this.users = users;
+    public int getId() {
+        return _id;
     }
 
-    public String getModuleName() {
-        return moduleName;
+    public void setId(int _id) {
+        this._id = _id;
     }
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String _name) {
+        this._name = _name;
     }
 
     public int getSemester() {
-        return semester;
+        return _semester;
     }
 
-    public void setSemester(int semester) {
-        this.semester = semester;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setSemester(int _semester) {
+        this._semester = _semester;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.moduleName);
-        hash = 97 * hash + this.semester;
-        hash = 97 * hash + Objects.hashCode(this.users);
+        hash = 23 * hash + this._id;
+        hash = 23 * hash + Objects.hashCode(this._name);
+        hash = 23 * hash + this._semester;
         return hash;
     }
 
@@ -88,13 +76,13 @@ public class Module extends AbstractEntity {
             return false;
         }
         final Module other = (Module) obj;
-        if (this.semester != other.semester) {
+        if (this._id != other._id) {
             return false;
         }
-        if (!Objects.equals(this.moduleName, other.moduleName)) {
+        if (this._semester != other._semester) {
             return false;
         }
-        if (!Objects.equals(this.users, other.users)) {
+        if (!Objects.equals(this._name, other._name)) {
             return false;
         }
         return true;
@@ -102,7 +90,7 @@ public class Module extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Module{" + "moduleName=" + moduleName + ", semester=" + semester + ", users=" + users + '}';
+        return "Module{" + "_id=" + _id + ", _name=" + _name + ", _semester=" + _semester + '}';
     }
     
 }
