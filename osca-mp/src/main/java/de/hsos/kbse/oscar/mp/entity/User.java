@@ -5,6 +5,7 @@
  */
 package de.hsos.kbse.oscar.mp.entity;
 
+import de.hsos.kbse.osca.abstracts.AbstractEntity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,89 +17,126 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author PMark
+ * @author Philipp Markmann
  */
 
 @Entity
-@Table
-public class User {
+public class User extends AbstractEntity{
     
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private String _id;
-    private String _studentName;
-    private String _email;
-    private String _studentPassword;
-    private boolean _isDozent;
+    @NotNull(message = "Firstname may not be empty")
+    private String firstname;
+    @NotNull(message = "Lastname may not be empty")
+    private String lastname;
+    
+    @NotNull(message = "Email may not be empty")
+    private String email;
+    
+    /**
+     * Wird eine PLZ, Straße und Stadt benötigt? 
+     * 
+     * @NotNull(message = "PLZ may not be empty)
+     * pirvate int plz;
+     * 
+     * @NotNull(message = "Street may not be empty)
+     * private String street;
+     * @NotNull(message = "City may not be empty)
+     * private String city
+     */
+    
+    @NotNull(message = "Username may not be empty")
+    private String studentLogin;
+    @NotNull(message = "Password may not be empty")
+    private String studentPassword;
+    
+    private int accountType; // Admin, Student, Dozent
     
     //Relation zu Modul (OOAD, Mathe 2,...)
     @ManyToMany
     private List<Module> modules;
-    
-    
+
     public User() {
-        //
     }
 
-    public User(String id, String studentName, String email, String studentPassword, boolean isDozent) {
-        this._id = id;
-        this._studentName = studentName;
-        this._email = email;
-        this._studentPassword = studentPassword;
-        this._isDozent = isDozent;
-    }
-   
-    public String getId() {
-        return _id;
+    public User(String firstname, String lastname, String _email, String studentLogin, String studentPassword, int accountType, List<Module> modules) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.studentLogin = studentLogin;
+        this.studentPassword = studentPassword;
+        this.accountType = accountType;
+        this.modules = modules;
     }
 
-    public void setId(String _id) {
-        this._id = _id;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getStudentName() {
-        return _studentName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public void setStudentName(String _studentName) {
-        this._studentName = _studentName;
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
-        return _email;
+        return email;
     }
 
-    public void setEmail(String _email) {
-        this._email = _email;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStudentLogin() {
+        return studentLogin;
+    }
+
+    public void setStudentLogin(String studentLogin) {
+        this.studentLogin = studentLogin;
     }
 
     public String getStudentPassword() {
-        return _studentPassword;
+        return studentPassword;
     }
 
-    public void setStudentPassword(String _studentPassword) {
-        this._studentPassword = _studentPassword;
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
     }
 
-    public boolean isIsDozent() {
-        return _isDozent;
+    public int getAccountType() {
+        return accountType;
     }
 
-    public void setIsDozent(boolean _isDozent) {
-        this._isDozent = _isDozent;
+    public void setAccountType(int accountType) {
+        this.accountType = accountType;
+    }
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this._id);
-        hash = 37 * hash + Objects.hashCode(this._studentName);
-        hash = 37 * hash + Objects.hashCode(this._email);
-        hash = 37 * hash + Objects.hashCode(this._studentPassword);
-        hash = 37 * hash + (this._isDozent ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.firstname);
+        hash = 37 * hash + Objects.hashCode(this.lastname);
+        hash = 37 * hash + Objects.hashCode(this.email);
+        hash = 37 * hash + Objects.hashCode(this.studentLogin);
+        hash = 37 * hash + Objects.hashCode(this.studentPassword);
+        hash = 37 * hash + this.accountType;
+        hash = 37 * hash + Objects.hashCode(this.modules);
         return hash;
     }
 
@@ -114,19 +152,25 @@ public class User {
             return false;
         }
         final User other = (User) obj;
-        if (this._isDozent != other._isDozent) {
+        if (this.accountType != other.accountType) {
             return false;
         }
-        if (!Objects.equals(this._id, other._id)) {
+        if (!Objects.equals(this.firstname, other.firstname)) {
             return false;
         }
-        if (!Objects.equals(this._studentName, other._studentName)) {
+        if (!Objects.equals(this.lastname, other.lastname)) {
             return false;
         }
-        if (!Objects.equals(this._email, other._email)) {
+        if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this._studentPassword, other._studentPassword)) {
+        if (!Objects.equals(this.studentLogin, other.studentLogin)) {
+            return false;
+        }
+        if (!Objects.equals(this.studentPassword, other.studentPassword)) {
+            return false;
+        }
+        if (!Objects.equals(this.modules, other.modules)) {
             return false;
         }
         return true;
@@ -134,6 +178,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "_id=" + _id + ", _studentName=" + _studentName + ", _email=" + _email + ", _studentPassword=" + _studentPassword + ", _isDozent=" + _isDozent + '}';
+        return "User{" + "firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", studentLogin=" + studentLogin + ", studentPassword=" + studentPassword + ", accountType=" + accountType + ", modules=" + modules + '}';
     }
+
 }
